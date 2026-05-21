@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The AI Adoption Map — How U.S. Businesses Are Using AI</title>
+<meta name="description" content="An interactive look at how U.S. businesses used Artificial Intelligence from late 2025 to early 2026. Based on the U.S. Census Bureau's Business Trends and Outlook Survey." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;900&family=Source+Sans+3:wght@300;400;600;700&family=Source+Serif+4:wght@400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+
+<style>
+  :root {
+    --ink:        #121212;
+    --ink-soft:   #3a3a3a;
+    --muted:      #6b6b6b;
+    --rule:       #d6d2c4;
+    --paper:      #fbf9f4;
+    --paper-2:    #f3efe4;
+    --accent:     #8b1e1e;     /* editorial deep red */
+    --accent-2:   #1f4e79;     /* sober blue */
+    --highlight:  #f5e6a5;
+    --max:        1100px;
+    --measure:    680px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html {
+    scroll-padding-top: 98px;
+  }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+    font-size: 18px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  a { color: var(--accent-2); text-decoration: none; border-bottom: 1px solid currentColor; }
+  a:hover { color: var(--accent); }
+  #top,
+  section.view,
+  section.method {
+    scroll-margin-top: 98px;
+  }
+
+  /* ====== Nav ====== */
+  nav.top {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(251, 249, 244, 0.95);
+    backdrop-filter: saturate(180%) blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+  nav.top .wrap {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: nowrap;
+  }
+  nav.top .brand {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 900;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    border: none;
+    flex: 0 0 auto;
+  }
+  nav.top ul {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; gap: 22px; flex-wrap: nowrap;
+    margin-left: auto;
+    font-family: "Source Sans 3", -apple-system, system-ui, sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav.top ul::-webkit-scrollbar { display: none; }
+  nav.top li { flex: 0 0 auto; }
+  nav.top a.nav-link {
+    color: var(--ink-soft);
+    border: none;
+    padding: 4px 0;
+    white-space: nowrap;
+  }
+  nav.top a.nav-link:hover { color: var(--accent); }
+
+  /* ====== Hero ====== */
+  header.hero {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 70px 24px 40px;
+    text-align: left;
+  }
+  .kicker {
+    font-family: "Source Sans 3", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  header.hero h1 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 900;
+    font-size: clamp(36px, 6vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    margin: 0 0 18px;
+    max-width: 880px;
+  }
+  header.hero p.dek {
+    font-family: "Source Serif 4", Georgia, serif;
+    font-size: 20px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: var(--measure);
+    margin: 0 0 8px;
+  }
+  header.hero .byline {
+    font-family: "Source Sans 3", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* ====== Intro / prose ====== */
+  section.prose {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 24px 24px 48px;
+    font-size: 19px;
+    line-height: 1.65;
+  }
+  section.prose p { margin: 0 0 1.1em; }
+  section.prose p:first-of-type::first-letter {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 900;
+    font-size: 4.2em;
+    line-height: 0.9;
+    float: left;
+    padding: 6px 10px 0 0;
+    color: var(--accent);
+  }
+
+  /* ====== Key metrics ====== */
+  .metric-strip {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 24px 56px;
+  }
+  .metric-intro {
+    max-width: var(--measure);
+    margin-bottom: 32px;
+  }
+  .metric-intro h2 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(26px, 4vw, 36px);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin: 0 0 14px;
+    color: var(--ink);
+  }
+  .metric-intro .metric-sub {
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .metric-grid {
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .metric {
+    padding: 20px 18px;
+    border-right: 1px solid var(--rule);
+  }
+  .metric:last-child { border-right: 0; }
+  .metric .value {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 34px;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .metric .label {
+    font-family: "Source Sans 3", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--muted);
+    line-height: 1.35;
+  }
+
+  /* ====== Section ====== */
+  section.view {
+    border-top: 4px solid var(--ink);
+    padding: 60px 0 60px;
+  }
+  section.view .container {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  section.view .label {
+    font-family: "Source Sans 3", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  section.view h2 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(28px, 4vw, 42px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0 0 14px;
+    max-width: 880px;
+  }
+  section.view .standfirst {
+    font-size: 19px;
+    color: var(--ink-soft);
+    max-width: var(--measure);
+    margin: 0 0 30px;
+    line-height: 1.55;
+  }
+
+  /* ====== Filters ====== */
+  .filters {
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 18px 22px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px 28px;
+    align-items: center;
+    margin-bottom: 32px;
+    font-family: "Source Sans 3", sans-serif;
+  }
+  .filters .group { display: flex; flex-direction: column; gap: 4px; min-width: 200px; }
+  .filters label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .filters select {
+    font-family: "Source Sans 3", sans-serif;
+    font-size: 15px;
+    padding: 8px 10px;
+    border: 1px solid #c0bba8;
+    background: white;
+    color: var(--ink);
+    border-radius: 3px;
+    min-width: 220px;
+    cursor: pointer;
+  }
+  .filters select:focus {
+    outline: 2px solid var(--accent-2);
+    outline-offset: 1px;
+  }
+  .filters .slice-pill {
+    background: var(--highlight);
+    color: var(--ink);
+    padding: 4px 10px;
+    border-radius: 2px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+  .filters .legend-bits {
+    font-family: "Source Sans 3", sans-serif;
+    font-size: 13px;
+    color: var(--ink-soft);
+    display: flex;
+    align-items: center;
+  }
+  .filters .legend-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+  .filters .legend-label { margin-right: 4px; }
+
+  /* ====== Chart areas ====== */
+  .chart-wrap {
+    background: white;
+    border: 1px solid var(--rule);
+    padding: 28px;
+    border-radius: 4px;
+    margin-bottom: 28px;
+  }
+  .chart-title {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 700;
+    font-size: 22px;
+    margin: 0 0 6px;
+  }
+  .chart-sub {
+    font-family: "Source Sans 3", sans-serif;
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0 0 18px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .finding-callouts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 4px 0 28px;
+  }
+  .finding-card {
+    background: white;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 18px;
+    min-height: 130px;
+  }
+  .finding-value {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 38px;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .finding-label {
+    font-family: "Source Sans 3", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .finding-note {
+    font-family: "Source Sans 3", sans-serif;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.35;
+    margin-top: 8px;
+  }
+  .finding-value .small {
+    font-size: 0.62em;
+  }
+  .zone-key {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 0 0 18px;
+    font-family: "Source Sans 3", sans-serif;
+  }
+  .zone-key span {
+    border-left: 3px solid var(--rule);
+    color: var(--ink-soft);
+    font-size: 12px;
+    line-height: 1.3;
+    padding-left: 9px;
+  }
+  .zone-key strong {
+    display: block;
+    color: var(--ink);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .denom-note {
+    border-left: 3px solid var(--highlight);
+    color: var(--ink-soft);
+    font-family: "Source Sans 3", sans-serif;
+    font-size: 14px;
+    line-height: 1.45;
+    margin: 0 0 18px;
+    padding-left: 12px;
+  }
+  .canvas-frame { position: relative; height: 580px; }
+
+  .chart-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 22px; }
+  @media (max-width: 900px) { .chart-grid { grid-template-columns: 1fr; } }
+
+  .data-details {
+    margin: -6px 0 28px;
+    font-family: "Source Sans 3", sans-serif;
+  }
+  .data-details summary {
+    cursor: pointer;
+    color: var(--accent-2);
+    font-size: 14px;
+    font-weight: 700;
+    width: fit-content;
+  }
+  .table-scroll {
+    margin-top: 14px;
+    overflow-x: auto;
+    border: 1px solid var(--rule);
+    background: white;
+  }
+  .data-table {
+    border-collapse: collapse;
+    min-width: 620px;
+    width: 100%;
+    font-size: 14px;
+  }
+  .data-table th,
+  .data-table td {
+    border-bottom: 1px solid #ebe7da;
+    padding: 9px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+  .data-table th {
+    background: var(--paper-2);
+    color: var(--ink);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .data-table td.num {
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    white-space: nowrap;
+  }
+  .data-table tr:last-child td { border-bottom: 0; }
+
+  /* ====== Interpretation ====== */
+  .interpret {
+    background: transparent;
+    border-left: 4px solid var(--accent);
+    padding: 18px 0 18px 26px;
+    margin: 32px 0 0;
+    max-width: var(--measure);
+    font-size: 18px;
+    line-height: 1.65;
+  }
+  .interpret h3 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 700;
+    font-size: 20px;
+    margin: 0 0 10px;
+    letter-spacing: -0.005em;
+  }
+  .interpret p { margin: 0 0 0.9em; }
+  .interpret p:last-child { margin: 0; }
+
+  /* ====== Methodology ====== */
+  section.method {
+    background: var(--paper-2);
+    border-top: 4px solid var(--ink);
+    padding: 60px 0;
+  }
+  section.method .container {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  section.method h2 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 700;
+    font-size: 34px;
+    margin: 0 0 22px;
+  }
+  section.method h3 {
+    font-family: "Playfair Display", Georgia, serif;
+    font-weight: 700;
+    font-size: 19px;
+    margin: 28px 0 8px;
+  }
+  section.method p, section.method li {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  section.method ul { padding-left: 22px; }
+
+  /* ====== Footer ====== */
+  footer.foot {
+    border-top: 1px solid var(--rule);
+    padding: 36px 24px;
+    text-align: center;
+    font-family: "Source Sans 3", sans-serif;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  footer.foot a { color: var(--muted); border-bottom-color: var(--rule); }
+
+  /* tablet and narrow-screen nav */
+  @media (max-width: 900px) {
+    html { scroll-padding-top: 112px; }
+    #top,
+    section.view,
+    section.method {
+      scroll-margin-top: 112px;
+    }
+    nav.top .wrap {
+      gap: 8px;
+      padding: 10px 24px;
+    }
+    nav.top ul {
+      font-size: 12px;
+      gap: 16px;
+      flex: 1 1 auto;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      margin-left: 0;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+    }
+    nav.top ul::-webkit-scrollbar { display: none; }
+    nav.top li { flex: 0 0 auto; }
+    nav.top a.nav-link { white-space: nowrap; }
+    nav.top .brand { font-size: 18px; }
+  }
+
+  /* small-screen tweaks */
+  @media (max-width: 600px) {
+    body { font-size: 17px; }
+    header.hero { padding-top: 42px; }
+    .metric-grid { grid-template-columns: 1fr 1fr; }
+    .metric:nth-child(2) { border-right: 0; }
+    .metric:nth-child(-n+2) { border-bottom: 1px solid var(--rule); }
+    .metric .value { font-size: 28px; }
+    .finding-callouts { grid-template-columns: 1fr; }
+    .finding-card { min-height: 0; }
+    .finding-value { font-size: 32px; }
+    .zone-key { grid-template-columns: 1fr 1fr; }
+    .chart-wrap { padding: 22px 16px; }
+    .chart-title { font-size: 21px; }
+    .canvas-frame { height: 540px; }
+    .filters select { min-width: 100%; }
+    .filters .group { min-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="top" aria-label="Section navigation">
+  <div class="wrap">
+    <a href="#top" class="brand">The AI Adoption Map</a>
+    <ul>
+      <li><a href="#view-a" class="nav-link">Where AI Has Reached</a></li>
+      <li><a href="#view-b" class="nav-link">Substitution or Supplement?</a></li>
+      <li><a href="#view-c" class="nav-link">The Task Audit</a></li>
+      <li><a href="#methodology" class="nav-link">About the data</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<a id="top"></a>
+<header class="hero">
+  <div class="kicker">Business Trends and Outlook Survey · Late 2025 – Early 2026</div>
+  <h1>How U.S. businesses are actually using AI</h1>
+  <p class="dek">An interactive look at where Artificial Intelligence has reached inside American companies — by industry, by firm size, and by the kind of work AI is doing. Drawn from the U.S. Census Bureau's Business Trends and Outlook Survey (BTOS) AI Supplement.</p>
+  <div class="byline">Data collected Nov 2025 – Feb 2026 · Source: U.S. Census Bureau, BTOS AI Supplement</div>
+</header>
+
+<!-- ============ INTRO PROSE ============ -->
+<section class="prose">
+  <p>The Census Bureau quietly runs one of the most useful surveys about AI that almost nobody reads. The Business Trends and Outlook Survey sample covers roughly 1.2 million U.S. employer businesses over a 12-week cycle, with about 200,000 cases fielded every two weeks. Twice a year it adds an AI supplement — thirteen questions about where AI is being deployed, what tasks are shifting from people to machines, and where Generative AI is showing up in everyday knowledge work.</p>
+
+  <p>This page lets you explore the three most interesting cuts of that data. <strong>Where AI Has Reached</strong> shows where AI sits inside the company — which of fifteen business functions have actually adopted it, and where firms plan to deploy it next. <strong>Substitution or Supplement?</strong> asks a foundational question: is AI <em>substituting</em> for employee tasks, or <em>supplementing</em> human work? <strong>The Task Audit</strong> looks specifically at Generative AI — when employees use it, which tasks does it touch?</p>
+
+  <p>Use the dropdowns to filter the whole national picture down to a single sector, or to firms of a particular size. The charts and the short interpretations beneath them update automatically.</p>
+</section>
+
+<section class="metric-strip" aria-labelledby="headline-stat">
+  <div class="metric-intro">
+    <div class="kicker">The Headline Number</div>
+    <h2 id="headline-stat">About 1 in 5 U.S. firms is using AI</h2>
+    <p class="metric-sub">Whichever way BTOS asks the question — current use, planned use, employee adoption, or Generative AI specifically — the answer lands between 17.9% and 22.6%. Roughly one fifth of the U.S. economy is in the AI game right now.</p>
+  </div>
+  <div class="metric-grid">
+    <div class="metric">
+      <div class="value">17.9%</div>
+      <div class="label">Firms using AI in any business function, last 2 weeks</div>
+    </div>
+    <div class="metric">
+      <div class="value">21.6%</div>
+      <div class="label">Firms planning AI use in any business function, next 6 months</div>
+    </div>
+    <div class="metric">
+      <div class="value">22.6%</div>
+      <div class="label">Firms reporting employee AI task use, last 6 months</div>
+    </div>
+    <div class="metric">
+      <div class="value">20.8%</div>
+      <div class="label">Firms reporting employee GenAI task use, last 6 months</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VIEW A ============ -->
+<section class="view" id="view-a">
+  <div class="container">
+    <div class="label">Where AI Has Reached</div>
+    <h2>Where in the business is AI being used?</h2>
+    <p class="standfirst">The share of firms using AI in each of fifteen business functions. The bars marked "Current" show actual use in the last six months. The bars marked "Planned" estimate where firms expect to use AI in the next six months on the same all-firms basis.</p>
+
+    <div class="filters">
+      <div class="group">
+        <label for="a-slice">Data slice</label>
+        <select id="a-slice">
+          <option value="National">National (all U.S. firms)</option>
+          <optgroup label="By industry sector">
+            <!-- populated by JS -->
+          </optgroup>
+          <optgroup label="By firm size">
+            <!-- populated by JS -->
+          </optgroup>
+        </select>
+      </div>
+      <div>
+        <span class="slice-pill" id="a-pill">National</span>
+      </div>
+    </div>
+
+    <div class="chart-wrap">
+      <div class="chart-title">Share of firms using AI in each business function</div>
+      <div class="chart-sub" id="a-chart-sub">Current use vs. all-firm planned-use estimate</div>
+      <p class="denom-note"><strong>About the comparison:</strong> Current values come straight from the BTOS data (share of all firms in the selected slice using AI in each function). Planned values have been normalized to the same all-firms basis so the two bars are directly comparable. Without this adjustment, planned numbers would be inflated because BTOS asks about future plans only of firms that plan to use AI at all.</p>
+      <div class="canvas-frame"><canvas id="chartA"></canvas></div>
+    </div>
+
+    <details class="data-details">
+      <summary>Show data table</summary>
+      <div class="table-scroll" id="tableA"></div>
+    </details>
+
+    <div class="interpret">
+      <h3>Reading this view</h3>
+      <p>The "current" column tells you which functions AI has actually reached. The "planned" column estimates the all-firm share that expects to use AI in that function next. Because those values are now on the same denominator, the gap is a directional signal, not a certainty: a large positive gap suggests potential expansion, while a flat or negative gap may reflect slower growth, timing differences, or survey uncertainty.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VIEW B ============ -->
+<section class="view" id="view-b">
+  <div class="container">
+    <div class="label">Substitution or Supplement?</div>
+    <h2>AI is mostly supplementing work, but substitution appears where AI use is deepest</h2>
+    <p class="standfirst">Among firms that use AI, every industry sector reports more supplementation than substitution. Nationally, AI-using firms are about four times more likely to say AI supplements employee work than replaces employee tasks. But substitution is not absent: it shows up most in the same knowledge-heavy sectors where AI use is most mature.</p>
+
+    <div class="finding-callouts" aria-label="National substitution and supplementation findings">
+      <div class="finding-card">
+        <div class="finding-value">43.7%</div>
+        <div class="finding-label">AI-using firms using AI to supplement employee work</div>
+      </div>
+      <div class="finding-card">
+        <div class="finding-value">10.1%</div>
+        <div class="finding-label">AI-using firms using AI to substitute for employee tasks</div>
+      </div>
+      <div class="finding-card">
+        <div class="finding-value">0</div>
+        <div class="finding-label">Industry sectors where substitution exceeds supplementation</div>
+        <div class="finding-note">All usable sector points sit above the diagonal.</div>
+      </div>
+    </div>
+
+    <div class="filters">
+      <div class="legend-bits">
+        <span class="legend-dot" style="background:#8b1e1e"></span> <span class="legend-label">Industry sector</span>
+        <span class="legend-dot" style="background:#c8a02a; margin-left:18px"></span> <span class="legend-label">National benchmark</span>
+      </div>
+    </div>
+
+    <div class="chart-wrap">
+      <div class="chart-title">The more AI-active sectors do both: supplement more, substitute more</div>
+      <div class="chart-sub">Source: BTOS Q3 — among AI-using firms; every dot is one of 20 NAICS sectors.</div>
+      <p class="denom-note">This chart is conditional on AI use. It compares how AI users describe task change; it does not show how common substitution or supplementation is across all firms.</p>
+      <div class="zone-key" aria-label="Chart zone guide">
+        <span><strong>Mostly supplementing</strong> High above the diagonal.</span>
+        <span><strong>AI-deep sectors</strong> Upper right: doing both.</span>
+        <span><strong>Lower task impact</strong> Lower left: less movement on both measures.</span>
+        <span><strong>Substitution would lead</strong> Below the diagonal.</span>
+      </div>
+      <div class="canvas-frame"><canvas id="chartB"></canvas></div>
+    </div>
+
+    <details class="data-details">
+      <summary>Show data table</summary>
+      <div class="table-scroll" id="tableB"></div>
+    </details>
+
+    <div class="interpret">
+      <h3>The main pattern: depth of AI use</h3>
+      <p>The main pattern is not replacement versus assistance. It is depth of AI use.</p>
+      <p>Every sector sits above the diagonal, which means supplementation is more common than substitution across the board. Transportation, Accommodation and Food Services, Other Services, Construction, and Agriculture are closest to the lower-left: they are not especially substitution-heavy, they are simply less AI-intensive overall.</p>
+      <p>The sectors highest on supplementation are also among the highest on substitution: Professional Services, Information, Finance, and Education. That suggests task replacement is emerging first where AI is already woven into knowledge work, not as a broad economy-wide labor shock.</p>
+      <p>The important caveat: this is about tasks, not jobs. BTOS does not show that AI is eliminating positions. It shows that some employee tasks are being handed to AI, while many more are being assisted by it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VIEW C ============ -->
+<section class="view" id="view-c">
+  <div class="container">
+    <div class="label">The Task Audit</div>
+    <h2>GenAI has found the paperwork layer</h2>
+    <p class="standfirst">Among firms whose employees use GenAI, the dominant uses are writing, searching, and summarizing: tasks built around language and information. More relational or situated tasks are less prominent, but that does not mean they are permanently human-only.</p>
+
+    <div class="finding-callouts" aria-label="National GenAI task findings">
+      <div class="finding-card">
+        <div class="finding-value">85.4%</div>
+        <div class="finding-label">GenAI-using firms using it for writing or editing</div>
+      </div>
+      <div class="finding-card">
+        <div class="finding-value">30.0%</div>
+        <div class="finding-label">Using GenAI to develop or research new projects</div>
+        <div class="finding-note">This is mid-tier, not bottom-tier.</div>
+      </div>
+      <div class="finding-card">
+        <div class="finding-value">12.7<span class="small">%</span></div>
+        <div class="finding-label">Using GenAI for coding or debugging nationally</div>
+        <div class="finding-note">But it rises to 34.2% in Information.</div>
+      </div>
+    </div>
+
+    <div class="filters">
+      <div class="group">
+        <label for="c-slice">Data slice</label>
+        <select id="c-slice">
+          <option value="National">National (all U.S. firms)</option>
+          <optgroup label="By industry sector"></optgroup>
+          <optgroup label="By firm size"></optgroup>
+        </select>
+      </div>
+      <div>
+        <span class="slice-pill" id="c-pill">National</span>
+      </div>
+    </div>
+
+    <div class="chart-wrap">
+      <div class="chart-title">GenAI is mostly a writing, search, and summarizing tool</div>
+      <div class="chart-sub" id="c-chart-sub">Share of GenAI-using firms reporting use for each task</div>
+      <p class="denom-note">This chart is conditional on employee GenAI use. A high bar means the task is common among GenAI-using firms, not among all firms in the economy. A low bar means the task is less prominent in employee GenAI use, not necessarily untouched by AI.</p>
+      <div class="canvas-frame"><canvas id="chartC"></canvas></div>
+    </div>
+
+    <details class="data-details">
+      <summary>Show data table</summary>
+      <div class="table-scroll" id="tableC"></div>
+    </details>
+
+    <div class="interpret">
+      <h3>What GenAI has not absorbed yet</h3>
+      <p>The pattern is less "AI does everything" than "AI has found the paperwork layer." Writing and editing dominate, followed by searching for information and interpreting, analyzing, translating, or summarizing documents. GenAI is showing up first where work can be expressed as text, search, synthesis, or documentation.</p>
+      <p>Developing or researching new projects is not actually a low-use category: nationally it sits at 30.0%, which suggests GenAI is already part of ideation and early-stage project work. Customer support and tutoring are lower, but that should be read carefully. This question asks about employees using GenAI; customer-facing chatbots or embedded automation may show up elsewhere.</p>
+      <p>Coding is also easy to misread. It is only 12.7% nationally, but it jumps to 34.2% in Information and 23.7% in Professional Services. That makes coding a concentrated GenAI use case rather than a broad-economy one.</p>
+      <p>Firm size matters too. Large firms report much heavier use for document interpretation, paperwork, and data analysis. That hints that bigger companies may be embedding GenAI deeper into internal knowledge-processing workflows.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ METHODOLOGY ============ -->
+<section class="method" id="methodology">
+  <div class="container">
+    <h2>About the data</h2>
+    <p>All figures on this page come from the U.S. Census Bureau's <strong>Business Trends and Outlook Survey (BTOS) — Artificial Intelligence Supplement</strong>. The BTOS sample covers roughly 1.2 million U.S. employer businesses over a 12-week cycle, with about 200,000 cases fielded every two weeks. The AI supplement adds thirteen questions about AI use. The data shown here covers responses collected between November 2025 and February 2026.</p>
+
+    <h3>What "current" and "planned" mean</h3>
+    <p>"Current use" refers to AI used in the last six months. "Planned use" refers to AI the firm intends to deploy in the next six months. In View A, planned function values are converted to an all-firm estimate by multiplying the function share among AI-planning firms by the share of firms in the selected slice that plan to use AI at all.</p>
+
+    <h3>Suppressed values</h3>
+    <p>The Census suppresses estimates with insufficient sample size. Where a value is missing in a small sector or firm-size slice, it appears as a gap in the chart rather than a zero.</p>
+
+    <h3>Sector codes</h3>
+    <p>Sectors use NAICS two-digit codes. "Multi-sector firms" are companies whose operations span more than one NAICS sector, which the Census reports as a separate category.</p>
+
+    <h3>Source &amp; further reading</h3>
+    <p>U.S. Census Bureau, Business Trends and Outlook Survey, AI Supplement: <a href="https://www.census.gov/hfp/btos/data" target="_blank" rel="noopener">census.gov/hfp/btos/data</a>.</p>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="foot">
+  Built with public BTOS data by Michelle Annand · May 2026 · <a href="https://github.com/YOUR-USERNAME/btos-ai-dashboard" target="_blank" rel="noopener">Source on GitHub</a> · <a href="#top">Back to top ↑</a>
+</footer>
+
+<!-- ============ DATA + JS ============ -->
+<script id="btos-data" type="application/json">{"lookups":{"sectors":{"11":"Agriculture, Forestry, Fishing & Hunting","21":"Mining, Quarrying, Oil & Gas Extraction","22":"Utilities","23":"Construction","31":"Manufacturing","42":"Wholesale Trade","44":"Retail Trade","48":"Transportation & Warehousing","51":"Information","52":"Finance & Insurance","53":"Real Estate & Rental/Leasing","54":"Professional, Scientific & Technical Services","55":"Management of Companies & Enterprises","56":"Administrative, Support & Waste Management","61":"Educational Services","62":"Health Care & Social Assistance","71":"Arts, Entertainment & Recreation","72":"Accommodation & Food Services","81":"Other Services (except Public Admin)","XX":"Multi-sector firms"},"sizes":{"A":"1 to 4 employees","B":"5 to 9 employees","C":"10 to 19 employees","D":"20 to 49 employees","E":"50 to 99 employees","F":"100 to 249 employees","G":"250 or more employees"},"functions":{"1":"Production of goods","2":"Provision of services / merchandise","3":"Strategy and business development","4":"Finance and accounting","5":"Sales and marketing","6":"Customer service","7":"Research and development","8":"Information technology","9":"Human resources","10":"Public relations and communication","11":"Management and administration","12":"Sourcing, supply chains, and purchasing","13":"Quality management and control","14":"Distribution","15":"Legal and compliance"},"tasks":{"1":"Information processing, paperwork, or filing","2":"Writing or editing documents, emails, or communications","3":"Interpreting, analyzing, translating, or summarizing documents","4":"Customer support","5":"Developing or researching new projects, processes, or products","6":"Searching for information or technical help","7":"Software coding or debugging","8":"Data analysis or visualization","9":"Tutoring, training, or learning","10":"Other tasks"},"q3":{"1":"Substitution (replace employee task)","2":"Supplement (enhance employee work)","3":"New task not previously done","4":"None of the above"},"q4":{"1":"Small number","2":"Moderate number","3":"Large number"},"q6":{"1":"Employment increased","2":"Employment decreased","3":"No change"}},"slices":{"National":{"Q2_current":{"1":1.7,"2":6.4,"3":12.4,"4":6.6,"5":14.3,"6":7.6,"7":11.2,"8":11.4,"9":4.2,"10":9.3,"11":8.1,"12":2.6,"13":2.8,"14":0.9,"15":7.1},"Q12_planned":{"1":8.1,"2":32.4,"3":57.4,"4":36.5,"5":62.8,"6":40.0,"7":48.3,"8":47.3,"9":21.6,"10":43.8,"11":38.2,"12":14.6,"13":18.3,"14":6.3,"15":32.3},"Q3":{"1":10.1,"2":43.7,"3":10.6,"4":51.5},"Q4":{"1":70.9,"2":22.0,"3":7.1},"Q6":{"1":2.3,"2":2.0,"3":95.7},"Q10":{"1":34.7,"2":85.4,"3":44.6,"4":15.5,"5":30.0,"6":49.9,"7":12.7,"8":19.1,"9":16.1,"10":6.1}},"sector:11":{"Q2_current":{"1":null,"2":0.6,"3":5.5,"4":4.8,"5":4.9,"6":2.3,"7":4.1,"8":6.0,"9":1.3,"10":4.6,"11":4.4,"12":1.5,"13":null,"14":null,"15":4.5},"Q12_planned":{"1":null,"2":null,"3":56.0,"4":48.3,"5":51.9,"6":25.5,"7":46.2,"8":48.0,"9":12.4,"10":46.1,"11":39.0,"12":null,"13":null,"14":null,"15":29.4},"Q3":{"1":3.7,"2":32.0,"3":7.6,"4":66.7},"Q4":{"1":null,"2":null,"3":null},"Q6":{"1":null,"2":null,"3":96.7},"Q10":{"1":38.4,"2":88.2,"3":44.5,"4":9.7,"5":29.2,"6":53.4,"7":12.0,"8":28.9,"9":24.6,"10":null}},"sector:21":{"Q2_current":{"1":0.8,"2":1.6,"3":6.8,"4":5.9,"5":2.6,"6":1.8,"7":5.8,"8":4.6,"9":null,"10":3.6,"11":3.8,"12":0.8,"13":null,"14":null,"15":2.7},"Q12_planned":{"1":9.0,"2":15.6,"3":58.0,"4":45.1,"5":28.3,"6":17.1,"7":47.7,"8":42.1,"9":12.2,"10":30.9,"11":44.4,"12":14.6,"13":18.6,"14":null,"15":30.7},"Q3":{"1":3.9,"2":37.9,"3":9.4,"4":57.8},"Q4":{"1":78.8,"2":null,"3":null},"Q6":{"1":null,"2":null,"3":97.7},"Q10":{"1":23.0,"2":81.1,"3":39.2,"4":null,"5":28.5,"6":55.0,"7":16.2,"8":16.9,"9":9.0,"10":null}},"sector:22":{"Q2_current":{"1":null,"2":3.1,"3":9.0,"4":5.0,"5":7.2,"6":6.9,"7":5.3,"8":11.5,"9":5.5,"10":9.0,"11":9.2,"12":null,"13":null,"14":null,"15":4.1},"Q12_planned":{"1":null,"2":21.1,"3":61.2,"4":61.7,"5":56.5,"6":50.7,"7":33.4,"8":63.3,"9":30.7,"10":73.6,"11":50.6,"12":7.9,"13":13.7,"14":null,"15":34.9},"Q3":{"1":10.5,"2":46.0,"3":13.0,"4":50.1},"Q4":{"1":60.7,"2":39.3,"3":null},"Q6":{"1":null,"2":null,"3":97.8},"Q10":{"1":30.4,"2":89.9,"3":50.3,"4":19.9,"5":16.9,"6":50.7,"7":7.8,"8":32.4,"9":17.8,"10":null}},"sector:23":{"Q2_current":{"1":0.7,"2":1.5,"3":7.5,"4":4.4,"5":7.7,"6":4.4,"7":6.3,"8":6.9,"9":3.3,"10":5.5,"11":5.6,"12":2.3,"13":1.6,"14":0.5,"15":4.6},"Q12_planned":{"1":6.9,"2":16.6,"3":59.7,"4":40.0,"5":62.4,"6":37.9,"7":42.8,"8":44.4,"9":26.7,"10":41.2,"11":41.8,"12":19.4,"13":17.4,"14":5.4,"15":35.0},"Q3":{"1":5.0,"2":32.4,"3":7.2,"4":63.8},"Q4":{"1":89.6,"2":7.9,"3":null},"Q6":{"1":1.5,"2":1.1,"3":97.4},"Q10":{"1":37.6,"2":86.2,"3":40.9,"4":12.4,"5":23.1,"6":48.8,"7":7.1,"8":13.7,"9":13.3,"10":5.8}},"sector:31":{"Q2_current":{"1":2.2,"2":2.7,"3":9.4,"4":5.8,"5":12.8,"6":4.9,"7":8.3,"8":8.3,"9":4.2,"10":6.8,"11":6.9,"12":3.4,"13":2.3,"14":1.0,"15":6.1},"Q12_planned":{"1":15.0,"2":19.3,"3":56.7,"4":40.3,"5":67.5,"6":37.9,"7":46.5,"8":46.6,"9":26.9,"10":40.0,"11":40.2,"12":24.5,"13":19.5,"14":7.9,"15":32.6},"Q3":{"1":7.5,"2":43.8,"3":9.6,"4":52.0},"Q4":{"1":74.5,"2":20.5,"3":5.0},"Q6":{"1":1.7,"2":1.1,"3":97.1},"Q10":{"1":31.5,"2":83.9,"3":40.4,"4":13.2,"5":30.4,"6":50.6,"7":16.0,"8":20.0,"9":13.3,"10":8.7}},"sector:42":{"Q2_current":{"1":1.2,"2":3.5,"3":11.2,"4":5.8,"5":14.9,"6":6.2,"7":9.1,"8":9.6,"9":3.6,"10":7.5,"11":6.8,"12":4.4,"13":2.1,"14":1.6,"15":6.3},"Q12_planned":{"1":7.4,"2":23.0,"3":60.6,"4":38.6,"5":73.3,"6":42.8,"7":45.1,"8":47.0,"9":20.8,"10":41.4,"11":36.3,"12":26.4,"13":15.6,"14":12.1,"15":32.6},"Q3":{"1":7.7,"2":39.0,"3":9.6,"4":56.3},"Q4":{"1":75.9,"2":18.1,"3":6.0},"Q6":{"1":2.8,"2":2.1,"3":95.2},"Q10":{"1":34.4,"2":86.0,"3":46.5,"4":16.1,"5":27.6,"6":52.4,"7":12.4,"8":17.8,"9":13.7,"10":4.1}},"sector:44":{"Q2_current":{"1":1.5,"2":3.7,"3":9.5,"4":4.7,"5":15.8,"6":7.2,"7":7.5,"8":8.2,"9":2.9,"10":7.3,"11":5.2,"12":3.0,"13":2.2,"14":1.2,"15":4.9},"Q12_planned":{"1":8.6,"2":25.6,"3":57.5,"4":33.3,"5":80.1,"6":47.2,"7":42.2,"8":43.3,"9":19.8,"10":44.9,"11":33.8,"12":21.0,"13":16.0,"14":9.3,"15":30.1},"Q3":{"1":8.7,"2":33.7,"3":8.9,"4":61.5},"Q4":{"1":71.6,"2":20.9,"3":7.5},"Q6":{"1":1.9,"2":2.7,"3":95.4},"Q10":{"1":27.5,"2":82.1,"3":33.6,"4":21.5,"5":25.7,"6":41.3,"7":12.0,"8":16.7,"9":13.5,"10":11.1}},"sector:48":{"Q2_current":{"1":0.5,"2":2.9,"3":6.7,"4":4.8,"5":6.7,"6":5.1,"7":4.6,"8":6.6,"9":2.9,"10":4.9,"11":5.3,"12":2.4,"13":2.4,"14":1.9,"15":5.4},"Q12_planned":{"1":5.4,"2":27.8,"3":61.5,"4":47.8,"5":62.6,"6":54.1,"7":41.7,"8":53.9,"9":26.4,"10":39.3,"11":47.7,"12":25.1,"13":22.2,"14":15.9,"15":39.1},"Q3":{"1":7.6,"2":23.6,"3":6.0,"4":71.1},"Q4":{"1":86.4,"2":null,"3":null},"Q6":{"1":1.7,"2":3.2,"3":95.1},"Q10":{"1":38.6,"2":83.2,"3":39.1,"4":18.8,"5":21.1,"6":42.7,"7":6.8,"8":20.6,"9":15.7,"10":1.8}},"sector:51":{"Q2_current":{"1":8.3,"2":17.0,"3":24.2,"4":11.4,"5":25.5,"6":12.2,"7":25.4,"8":23.5,"9":5.8,"10":14.0,"11":12.7,"12":3.3,"13":5.5,"14":1.7,"15":12.1},"Q12_planned":{"1":18.9,"2":45.2,"3":58.9,"4":35.8,"5":62.4,"6":36.8,"7":60.8,"8":55.3,"9":19.1,"10":41.1,"11":36.2,"12":14.7,"13":21.1,"14":8.9,"15":33.0},"Q3":{"1":16.8,"2":59.5,"3":19.1,"4":34.5},"Q4":{"1":62.5,"2":26.9,"3":10.6},"Q6":{"1":4.5,"2":3.8,"3":91.7},"Q10":{"1":35.1,"2":82.3,"3":49.6,"4":17.8,"5":42.4,"6":52.3,"7":34.2,"8":27.5,"9":18.1,"10":8.9}},"sector:52":{"Q2_current":{"1":1.3,"2":10.6,"3":20.5,"4":10.6,"5":20.6,"6":16.2,"7":17.2,"8":18.9,"9":6.0,"10":13.5,"11":12.1,"12":1.8,"13":3.8,"14":1.3,"15":11.8},"Q12_planned":{"1":4.8,"2":35.1,"3":60.9,"4":40.2,"5":64.0,"6":50.0,"7":49.7,"8":50.9,"9":20.6,"10":43.5,"11":38.5,"12":7.5,"13":17.2,"14":5.9,"15":37.5},"Q3":{"1":13.7,"2":54.9,"3":12.5,"4":40.5},"Q4":{"1":71.6,"2":24.2,"3":4.2},"Q6":{"1":3.5,"2":1.5,"3":95.0},"Q10":{"1":38.6,"2":86.8,"3":53.9,"4":21.1,"5":28.3,"6":55.6,"7":8.1,"8":22.3,"9":15.8,"10":1.6}},"sector:53":{"Q2_current":{"1":1.2,"2":6.6,"3":16.0,"4":6.8,"5":22.9,"6":9.8,"7":13.5,"8":13.5,"9":3.4,"10":13.4,"11":9.1,"12":2.1,"13":2.6,"14":0.7,"15":8.2},"Q12_planned":{"1":5.0,"2":28.1,"3":59.7,"4":34.1,"5":74.7,"6":42.9,"7":46.2,"8":44.4,"9":14.7,"10":51.2,"11":35.3,"12":10.1,"13":15.4,"14":4.9,"15":31.8},"Q3":{"1":11.4,"2":47.1,"3":10.9,"4":47.4},"Q4":{"1":72.8,"2":23.9,"3":3.3},"Q6":{"1":2.2,"2":1.3,"3":96.5},"Q10":{"1":31.4,"2":90.5,"3":44.9,"4":13.1,"5":26.3,"6":47.1,"7":5.2,"8":18.1,"9":15.7,"10":5.0}},"sector:54":{"Q2_current":{"1":3.8,"2":18.2,"3":21.3,"4":11.7,"5":17.7,"6":10.0,"7":24.0,"8":21.9,"9":5.8,"10":13.1,"11":12.9,"12":3.2,"13":5.4,"14":1.2,"15":13.4},"Q12_planned":{"1":10.1,"2":51.2,"3":57.6,"4":37.2,"5":51.8,"6":32.5,"7":60.3,"8":53.7,"9":19.3,"10":38.8,"11":37.9,"12":12.5,"13":21.7,"14":5.9,"15":36.3},"Q3":{"1":15.5,"2":60.5,"3":15.4,"4":34.6},"Q4":{"1":61.6,"2":27.6,"3":10.8},"Q6":{"1":3.3,"2":2.4,"3":94.3},"Q10":{"1":38.8,"2":83.8,"3":53.6,"4":13.5,"5":39.1,"6":57.3,"7":23.7,"8":25.9,"9":18.1,"10":5.4}},"sector:55":{"Q2_current":{"1":null,"2":null,"3":15.7,"4":16.5,"5":10.5,"6":10.3,"7":10.4,"8":14.6,"9":null,"10":7.9,"11":14.9,"12":null,"13":null,"14":null,"15":14.2},"Q12_planned":{"1":null,"2":34.6,"3":63.5,"4":62.5,"5":42.9,"6":39.0,"7":54.1,"8":57.3,"9":null,"10":null,"11":null,"12":null,"13":null,"14":null,"15":55.8},"Q3":{"1":null,"2":61.6,"3":null,"4":35.5},"Q4":{"1":76.2,"2":null,"3":null},"Q6":{"1":null,"2":null,"3":92.1},"Q10":{"1":null,"2":81.4,"3":47.6,"4":null,"5":33.2,"6":59.9,"7":null,"8":null,"9":null,"10":null}},"sector:56":{"Q2_current":{"1":1.2,"2":5.5,"3":13.2,"4":6.7,"5":15.0,"6":8.0,"7":10.2,"8":10.1,"9":5.2,"10":9.1,"11":8.7,"12":2.9,"13":2.5,"14":0.8,"15":6.6},"Q12_planned":{"1":6.9,"2":29.8,"3":62.6,"4":37.5,"5":70.2,"6":45.2,"7":46.6,"8":45.7,"9":26.8,"10":48.0,"11":44.0,"12":16.0,"13":19.8,"14":6.0,"15":33.6},"Q3":{"1":9.8,"2":42.7,"3":11.8,"4":51.6},"Q4":{"1":72.3,"2":20.7,"3":7.0},"Q6":{"1":1.9,"2":2.3,"3":95.8},"Q10":{"1":34.6,"2":88.6,"3":45.3,"4":18.2,"5":30.1,"6":52.7,"7":10.1,"8":17.1,"9":16.8,"10":4.0}},"sector:61":{"Q2_current":{"1":2.2,"2":10.9,"3":22.2,"4":9.3,"5":27.4,"6":13.0,"7":21.2,"8":17.3,"9":7.7,"10":20.8,"11":15.0,"12":2.6,"13":3.5,"14":0.7,"15":9.4},"Q12_planned":{"1":8.6,"2":35.7,"3":59.3,"4":33.1,"5":67.8,"6":44.4,"7":55.8,"8":41.5,"9":21.8,"10":54.1,"11":39.4,"12":10.0,"13":16.6,"14":5.3,"15":28.1},"Q3":{"1":12.8,"2":57.0,"3":13.1,"4":38.9},"Q4":{"1":69.5,"2":19.5,"3":11.0},"Q6":{"1":2.0,"2":1.7,"3":96.2},"Q10":{"1":33.0,"2":91.1,"3":46.9,"4":15.5,"5":36.9,"6":50.6,"7":12.1,"8":19.8,"9":26.8,"10":5.0}},"sector:62":{"Q2_current":{"1":1.6,"2":6.4,"3":12.0,"4":6.1,"5":12.6,"6":8.1,"7":9.4,"8":12.6,"9":5.4,"10":11.1,"11":9.4,"12":1.7,"13":3.0,"14":0.5,"15":6.9},"Q12_planned":{"1":6.6,"2":26.5,"3":47.2,"4":30.8,"5":51.8,"6":36.6,"7":35.8,"8":44.5,"9":22.6,"10":44.2,"11":38.3,"12":9.9,"13":17.2,"14":3.2,"15":25.9},"Q3":{"1":9.5,"2":44.8,"3":8.7,"4":50.3},"Q4":{"1":78.5,"2":17.3,"3":4.2},"Q6":{"1":2.2,"2":1.6,"3":96.1},"Q10":{"1":37.5,"2":86.8,"3":39.7,"4":13.2,"5":23.3,"6":45.9,"7":4.4,"8":13.8,"9":16.1,"10":4.9}},"sector:71":{"Q2_current":{"1":1.8,"2":4.5,"3":13.7,"4":6.4,"5":17.2,"6":6.4,"7":11.7,"8":9.0,"9":3.5,"10":12.8,"11":8.3,"12":2.1,"13":2.0,"14":0.7,"15":6.0},"Q12_planned":{"1":6.5,"2":23.5,"3":57.7,"4":32.4,"5":67.2,"6":35.0,"7":46.4,"8":34.6,"9":18.2,"10":54.1,"11":34.4,"12":9.2,"13":12.0,"14":4.3,"15":24.1},"Q3":{"1":8.6,"2":47.0,"3":9.5,"4":49.6},"Q4":{"1":69.3,"2":23.0,"3":7.7},"Q6":{"1":2.0,"2":0.9,"3":97.1},"Q10":{"1":26.8,"2":88.5,"3":40.0,"4":11.0,"5":33.9,"6":42.8,"7":8.1,"8":15.7,"9":12.1,"10":6.6}},"sector:72":{"Q2_current":{"1":0.9,"2":2.2,"3":7.1,"4":4.5,"5":12.0,"6":5.4,"7":5.8,"8":5.3,"9":3.2,"10":7.0,"11":5.1,"12":2.1,"13":2.1,"14":0.8,"15":3.7},"Q12_planned":{"1":6.5,"2":19.6,"3":58.4,"4":39.6,"5":74.3,"6":44.5,"7":44.1,"8":38.9,"9":28.0,"10":51.1,"11":40.0,"12":19.5,"13":18.4,"14":7.5,"15":29.0},"Q3":{"1":5.6,"2":23.1,"3":6.1,"4":71.6},"Q4":{"1":81.5,"2":14.9,"3":3.6},"Q6":{"1":1.0,"2":2.3,"3":96.7},"Q10":{"1":29.7,"2":80.0,"3":34.2,"4":18.1,"5":23.6,"6":39.9,"7":3.7,"8":13.0,"9":13.9,"10":12.1}},"sector:81":{"Q2_current":{"1":0.8,"2":3.1,"3":7.6,"4":3.5,"5":10.1,"6":6.6,"7":6.6,"8":6.6,"9":2.5,"10":6.3,"11":4.8,"12":2.5,"13":1.5,"14":0.5,"15":3.8},"Q12_planned":{"1":5.7,"2":20.2,"3":59.4,"4":34.3,"5":70.7,"6":50.2,"7":45.1,"8":43.3,"9":20.0,"10":45.9,"11":33.1,"12":17.3,"13":14.3,"14":5.5,"15":26.9},"Q3":{"1":6.5,"2":27.3,"3":7.6,"4":68.5},"Q4":{"1":76.5,"2":17.7,"3":5.8},"Q6":{"1":1.2,"2":1.7,"3":97.1},"Q10":{"1":25.8,"2":81.7,"3":33.4,"4":21.7,"5":24.2,"6":45.2,"7":8.3,"8":11.4,"9":15.2,"10":9.9}},"sector:XX":{"Q2_current":{"1":2.0,"2":5.3,"3":15.8,"4":16.2,"5":19.6,"6":10.0,"7":9.5,"8":18.0,"9":10.8,"10":10.7,"11":13.9,"12":3.1,"13":3.4,"14":1.6,"15":9.0},"Q12_planned":{"1":7.0,"2":20.7,"3":56.6,"4":55.6,"5":58.8,"6":41.5,"7":35.1,"8":59.7,"9":37.7,"10":41.7,"11":45.2,"12":16.4,"13":18.0,"14":8.4,"15":31.0},"Q3":{"1":9.3,"2":51.1,"3":8.8,"4":45.7},"Q4":{"1":76.7,"2":23.3,"3":null},"Q6":{"1":2.6,"2":2.6,"3":94.8},"Q10":{"1":40.0,"2":89.9,"3":55.0,"4":12.4,"5":26.8,"6":52.3,"7":15.8,"8":29.0,"9":17.2,"10":2.4}},"size:A":{"Q2_current":{"1":1.8,"2":7.0,"3":12.0,"4":5.9,"5":13.1,"6":7.1,"7":11.9,"8":11.2,"9":2.9,"10":8.6,"11":6.9,"12":2.5,"13":2.6,"14":0.9,"15":6.8},"Q12_planned":{"1":8.9,"2":35.5,"3":56.8,"4":33.8,"5":60.7,"6":37.6,"7":51.7,"8":46.6,"9":15.6,"10":41.9,"11":34.5,"12":14.0,"13":17.1,"14":6.3,"15":32.3},"Q3":{"1":10.9,"2":42.8,"3":11.1,"4":52.0},"Q4":{"1":66.6,"2":24.4,"3":9.0},"Q6":{"1":2.3,"2":2.0,"3":95.7},"Q10":{"1":34.6,"2":83.6,"3":44.0,"4":15.0,"5":31.9,"6":50.9,"7":14.1,"8":18.6,"9":16.2,"10":6.6}},"size:B":{"Q2_current":{"1":1.5,"2":5.6,"3":12.1,"4":6.1,"5":15.2,"6":7.9,"7":10.3,"8":10.7,"9":4.5,"10":9.8,"11":8.2,"12":2.7,"13":2.8,"14":0.8,"15":6.9},"Q12_planned":{"1":7.3,"2":29.9,"3":58.2,"4":36.1,"5":66.5,"6":43.2,"7":46.1,"8":45.5,"9":22.7,"10":46.2,"11":39.3,"12":15.3,"13":18.7,"14":6.3,"15":32.1},"Q3":{"1":9.4,"2":43.1,"3":10.1,"4":52.4},"Q4":{"1":74.0,"2":21.1,"3":4.9},"Q6":{"1":2.3,"2":2.1,"3":95.6},"Q10":{"1":34.0,"2":85.8,"3":42.9,"4":17.2,"5":27.6,"6":47.7,"7":10.3,"8":17.6,"9":15.4,"10":6.1}},"size:C":{"Q2_current":{"1":1.4,"2":5.2,"3":12.5,"4":6.9,"5":15.8,"6":8.0,"7":9.9,"8":10.7,"9":5.5,"10":10.5,"11":9.6,"12":2.5,"13":2.9,"14":0.8,"15":7.2},"Q12_planned":{"1":7.6,"2":28.3,"3":58.6,"4":38.9,"5":67.9,"6":44.3,"7":44.5,"8":47.2,"9":29.1,"10":48.4,"11":43.4,"12":15.9,"13":20.6,"14":6.6,"15":32.2},"Q3":{"1":8.4,"2":44.4,"3":10.1,"4":51.4},"Q4":{"1":80.2,"2":16.2,"3":3.6},"Q6":{"1":1.9,"2":2.1,"3":95.9},"Q10":{"1":33.1,"2":87.6,"3":43.7,"4":16.3,"5":28.3,"6":47.1,"7":9.9,"8":18.6,"9":16.0,"10":6.5}},"size:D":{"Q2_current":{"1":1.0,"2":4.9,"3":13.9,"4":8.2,"5":17.4,"6":9.0,"7":9.7,"8":12.1,"9":8.1,"10":11.1,"11":11.5,"12":2.5,"13":3.2,"14":0.8,"15":7.9},"Q12_planned":{"1":5.5,"2":24.5,"3":58.2,"4":41.6,"5":67.5,"6":44.3,"7":41.3,"8":47.3,"9":35.2,"10":48.5,"11":47.8,"12":15.6,"13":19.7,"14":5.5,"15":33.2},"Q3":{"1":8.6,"2":44.8,"3":8.7,"4":51.2},"Q4":{"1":83.6,"2":13.2,"3":3.2},"Q6":{"1":2.1,"2":1.6,"3":96.3},"Q10":{"1":34.4,"2":89.0,"3":44.3,"4":15.8,"5":25.4,"6":48.5,"7":10.1,"8":19.3,"9":15.0,"10":5.0}},"size:E":{"Q2_current":{"1":1.3,"2":5.4,"3":15.4,"4":10.8,"5":18.0,"6":9.9,"7":10.2,"8":14.5,"9":11.5,"10":12.1,"11":14.0,"12":2.3,"13":3.8,"14":0.9,"15":8.2},"Q12_planned":{"1":5.4,"2":24.0,"3":59.4,"4":47.1,"5":63.8,"6":42.2,"7":39.5,"8":53.7,"9":43.6,"10":45.1,"11":49.2,"12":14.1,"13":21.1,"14":5.8,"15":31.5},"Q3":{"1":8.4,"2":48.0,"3":9.1,"4":47.9},"Q4":{"1":86.6,"2":13.4,"3":null},"Q6":{"1":2.2,"2":2.0,"3":95.8},"Q10":{"1":37.8,"2":89.9,"3":50.6,"4":13.3,"5":25.8,"6":49.9,"7":12.5,"8":22.7,"9":14.9,"10":2.5}},"size:F":{"Q2_current":{"1":1.5,"2":7.6,"3":18.2,"4":15.5,"5":19.5,"6":11.0,"7":10.7,"8":18.9,"9":14.8,"10":12.9,"11":17.4,"12":2.8,"13":4.6,"14":1.2,"15":10.4},"Q12_planned":{"1":5.5,"2":26.3,"3":57.5,"4":53.3,"5":59.1,"6":41.5,"7":35.9,"8":56.9,"9":47.4,"10":43.6,"11":51.8,"12":15.9,"13":23.3,"14":6.4,"15":34.2},"Q3":{"1":9.7,"2":52.5,"3":10.3,"4":44.0},"Q4":{"1":81.7,"2":15.7,"3":2.6},"Q6":{"1":2.4,"2":1.8,"3":95.8},"Q10":{"1":41.0,"2":92.1,"3":57.2,"4":15.0,"5":29.6,"6":55.1,"7":15.4,"8":28.5,"9":21.5,"10":2.1}},"size:G":{"Q2_current":{"1":1.9,"2":8.9,"3":18.2,"4":20.5,"5":19.0,"6":14.2,"7":11.9,"8":25.9,"9":13.6,"10":12.4,"11":16.3,"12":4.3,"13":6.1,"14":1.9,"15":10.5},"Q12_planned":{"1":6.5,"2":29.2,"3":53.1,"4":60.1,"5":53.8,"6":44.3,"7":32.7,"8":65.4,"9":42.0,"10":38.2,"11":46.4,"12":17.6,"13":22.6,"14":8.7,"15":29.8},"Q3":{"1":11.5,"2":54.1,"3":9.0,"4":43.4},"Q4":{"1":75.2,"2":21.5,"3":null},"Q6":{"1":3.0,"2":2.2,"3":94.8},"Q10":{"1":47.2,"2":89.9,"3":60.3,"4":17.4,"5":26.9,"6":57.3,"7":17.1,"8":36.7,"9":19.9,"10":1.8}}}}</script>
+
+<script>
+(function(){
+  const DATA = JSON.parse(document.getElementById('btos-data').textContent);
+  const L = DATA.lookups;
+  const PLANNED_ANY = {
+    "National": 21.6,
+    "sector:11": 8.4,
+    "sector:21": 9.9,
+    "sector:22": 14.1,
+    "sector:23": 12.9,
+    "sector:31": 17.4,
+    "sector:42": 20.0,
+    "sector:44": 16.6,
+    "sector:48": 10.7,
+    "sector:51": 43.0,
+    "sector:52": 34.1,
+    "sector:53": 26.6,
+    "sector:54": 37.5,
+    "sector:55": 26.4,
+    "sector:56": 19.9,
+    "sector:61": 35.3,
+    "sector:62": 24.9,
+    "sector:71": 21.7,
+    "sector:72": 11.5,
+    "sector:81": 12.1,
+    "sector:XX": 34.8,
+    "size:A": 20.8,
+    "size:B": 20.6,
+    "size:C": 21.9,
+    "size:D": 24.5,
+    "size:E": 28.5,
+    "size:F": 33.9,
+    "size:G": 40.0
+  };
+
+  // -- Build slice dropdowns
+  const sliceOptions = [
+    { value: 'National', label: 'National (all U.S. firms)', group: null }
+  ];
+  Object.entries(L.sectors).forEach(([code, name]) => {
+    sliceOptions.push({ value: 'sector:'+code, label: `${name} (${code})`, group: 'sector' });
+  });
+  Object.entries(L.sizes).forEach(([code, name]) => {
+    sliceOptions.push({ value: 'size:'+code, label: name, group: 'size' });
+  });
+
+  document.querySelectorAll('select[id$="-slice"]').forEach(sel => {
+    // Clear and rebuild
+    sel.innerHTML = '';
+    const natOpt = document.createElement('option');
+    natOpt.value = 'National'; natOpt.textContent = 'National (all U.S. firms)';
+    sel.appendChild(natOpt);
+
+    const gSector = document.createElement('optgroup'); gSector.label = 'By industry sector';
+    const gSize = document.createElement('optgroup'); gSize.label = 'By firm size';
+    sliceOptions.forEach(o => {
+      if (o.value === 'National') return;
+      const opt = document.createElement('option');
+      opt.value = o.value; opt.textContent = o.label;
+      if (o.group === 'sector') gSector.appendChild(opt);
+      if (o.group === 'size') gSize.appendChild(opt);
+    });
+    sel.appendChild(gSector); sel.appendChild(gSize);
+  });
+
+  // -- Helpers
+  function sliceLabel(key) {
+    if (key === 'National') return 'National';
+    if (key.startsWith('sector:')) return L.sectors[key.split(':')[1]] || key;
+    if (key.startsWith('size:')) return L.sizes[key.split(':')[1]] || key;
+    return key;
+  }
+  function getSlice(key) {
+    return DATA.slices[key] || DATA.slices['National'];
+  }
+  function plannedAnyRate(key) {
+    return PLANNED_ANY[key] ?? PLANNED_ANY.National;
+  }
+  function isNarrow() {
+    return window.matchMedia('(max-width: 700px)').matches;
+  }
+  const SHORT_FUNCTIONS = {
+    "1": "Production",
+    "2": "Services",
+    "3": "Strategy",
+    "4": "Finance",
+    "5": "Sales",
+    "6": "Customer service",
+    "7": "R&D",
+    "8": "IT",
+    "9": "HR",
+    "10": "PR / comms",
+    "11": "Management",
+    "12": "Supply chain",
+    "13": "Quality",
+    "14": "Distribution",
+    "15": "Legal"
+  };
+  const SHORT_TASKS = {
+    "1": "Paperwork",
+    "2": "Writing",
+    "3": "Analyze docs",
+    "4": "Customer support",
+    "5": "Research",
+    "6": "Search/help",
+    "7": "Coding",
+    "8": "Data/viz",
+    "9": "Training",
+    "10": "Other tasks"
+  };
+  function chartLabel(kind, id, fallback) {
+    if (!isNarrow()) return fallback;
+    return (kind === 'function' ? SHORT_FUNCTIONS[id] : SHORT_TASKS[id]) || fallback;
+  }
+  function pct(value) {
+    return value == null ? 'Suppressed' : `${value.toFixed(1)}%`;
+  }
+  function pp(value) {
+    if (value == null || Number.isNaN(value)) return '—';
+    return `${value >= 0 ? '+' : ''}${value.toFixed(1)} pp`;
+  }
+  function renderTable(targetId, headers, rows, numericCols = []) {
+    const target = document.getElementById(targetId);
+    if (!target) return;
+    target.innerHTML = '';
+    const table = document.createElement('table');
+    table.className = 'data-table';
+    const thead = document.createElement('thead');
+    const headRow = document.createElement('tr');
+    headers.forEach(h => {
+      const th = document.createElement('th');
+      th.textContent = h;
+      headRow.appendChild(th);
+    });
+    thead.appendChild(headRow);
+    table.appendChild(thead);
+    const tbody = document.createElement('tbody');
+    rows.forEach(row => {
+      const tr = document.createElement('tr');
+      row.forEach((cell, idx) => {
+        const td = document.createElement('td');
+        td.textContent = cell;
+        if (numericCols.includes(idx)) td.className = 'num';
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    target.appendChild(table);
+  }
+
+  // ============ Chart factories ============
+  Chart.defaults.font.family = '"Source Sans 3", -apple-system, system-ui, sans-serif';
+  Chart.defaults.font.size = 12;
+  Chart.defaults.color = '#3a3a3a';
+
+  const COLORS = {
+    current: '#8b1e1e',  // accent red
+    planned: '#c79d9d',  // muted red
+    primary: '#1f4e79',  // sober blue
+    subst:   '#8b1e1e',
+    augm:    '#1f4e79',
+    new:     '#c8a02a',
+    none:    '#9a9a9a',
+    pos:     '#2d6a4f',
+    neg:     '#8b1e1e',
+    same:    '#9a9a9a',
+  };
+
+  let chartA, chartB, chartC;
+
+  function renderA(key = 'National') {
+    const slice = getSlice(key);
+    const planAny = plannedAnyRate(key);
+    const labels = [];
+    const fullLabels = [];
+    const cur = [];
+    const planConditional = [];
+    const plan = [];
+    Object.entries(L.functions).forEach(([id, name]) => {
+      labels.push(chartLabel('function', id, name));
+      fullLabels.push(name);
+      cur.push(slice.Q2_current[id] ?? null);
+      const conditional = slice.Q12_planned[id] ?? null;
+      planConditional.push(conditional);
+      plan.push(conditional == null || planAny == null ? null : conditional * planAny / 100);
+    });
+
+    // National benchmark values, aligned 1:1 to the function ordering above
+    const isNational = key === 'National';
+    const natSlice = DATA.slices['National'];
+    const natPlanAny = PLANNED_ANY['National'];
+    const natCurrent = Object.keys(L.functions).map(id => natSlice.Q2_current[id] ?? null);
+    const natPlanned = Object.keys(L.functions).map(id => {
+      const cond = natSlice.Q12_planned[id];
+      return cond == null ? null : cond * natPlanAny / 100;
+    });
+
+    if (chartA) chartA.destroy();
+    chartA = new Chart(document.getElementById('chartA'), {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [
+          { label: 'Current use (last 6 mo)', data: cur, backgroundColor: COLORS.current, borderWidth: 0 },
+          { label: 'Planned estimate (next 6 mo)', data: plan, backgroundColor: COLORS.planned, borderWidth: 0, conditionalData: planConditional },
+        ]
+      },
+      options: {
+        indexAxis: 'y',
+        maintainAspectRatio: false,
+        responsive: true,
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 14, font: { size: 12 } } },
+          benchmarkTick: {
+            enabled: !isNational,
+            values: [natCurrent, natPlanned]
+          },
+          tooltip: {
+            callbacks: {
+              title: (items) => fullLabels[items[0].dataIndex],
+              label: (ctx) => {
+                const lines = [];
+                if (ctx.dataset.conditionalData) {
+                  const conditional = ctx.dataset.conditionalData[ctx.dataIndex];
+                  lines.push(`${ctx.dataset.label}: ${pct(ctx.parsed.x)}`);
+                  lines.push(`Among AI-planning firms: ${pct(conditional)}`);
+                  lines.push(`Planning AI use at all: ${pct(planAny)}`);
+                } else {
+                  lines.push(`${ctx.dataset.label}: ${pct(ctx.parsed.x)}`);
+                }
+                if (!isNational) {
+                  const natVal = ctx.datasetIndex === 0 ? natCurrent[ctx.dataIndex] : natPlanned[ctx.dataIndex];
+                  if (natVal != null && ctx.parsed.x != null) {
+                    lines.push(`National benchmark: ${pct(natVal)} (${pp(ctx.parsed.x - natVal)} vs. national)`);
+                  }
+                }
+                return lines;
+              }
+            }
+          }
+        },
+        scales: {
+          x: { ticks: { callback: v => v+'%' }, grid: { color: '#eee' }, beginAtZero: true },
+          y: { grid: { display: false }, ticks: { font: { size: 13 } } }
+        }
+      }
+    });
+
+    const subA = document.getElementById('a-chart-sub');
+    if (subA) subA.innerHTML = chartSubHtml('Current use vs. all-firm planned-use estimate', isNational);
+
+    const rows = fullLabels.map((name, i) => [
+      name,
+      pct(cur[i]),
+      pct(plan[i]),
+      pct(planConditional[i]),
+      pp(plan[i] == null || cur[i] == null ? null : plan[i] - cur[i])
+    ]);
+    renderTable('tableA', ['Business function', 'Current, all firms', 'Planned est., all firms', 'Among AI planners', 'Gap'], rows, [1, 2, 3, 4]);
+  }
+
+  // Plugin: label small sector codes next to scatter points
+  const refLineAndLabels = {
+    id: 'refLineAndLabels',
+    afterDatasetsDraw(chart) {
+      const {ctx, data} = chart;
+      data.datasets.forEach((ds, dsIdx) => {
+        if (!ds.pointLabels) return;
+        const meta = chart.getDatasetMeta(dsIdx);
+        meta.data.forEach((pt, i) => {
+          const label = ds.pointLabels[i];
+          if (label == null) return;
+          ctx.save();
+          ctx.font = '600 11px "Source Sans 3", sans-serif';
+          ctx.fillStyle = ds.labelColor || '#3a3a3a';
+          ctx.textAlign = 'left';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(label, pt.x + 8, pt.y);
+          ctx.restore();
+        });
+      });
+    }
+  };
+  // Plugin: draw a diagonal y=x line on scatter charts.
+  // Used in View B to mark the line where substitution equals supplementation.
+  const diagonalLine = {
+    id: 'diagonalLine',
+    beforeDatasetsDraw(chart, args, options) {
+      if (!options || !options.enabled) return;
+      const xScale = chart.scales.x;
+      const yScale = chart.scales.y;
+      if (!xScale || !yScale) return;
+      const maxVal = Math.min(xScale.max, yScale.max);
+      const x0 = xScale.getPixelForValue(0);
+      const y0 = yScale.getPixelForValue(0);
+      const x1 = xScale.getPixelForValue(maxVal);
+      const y1 = yScale.getPixelForValue(maxVal);
+      const ctx = chart.ctx;
+      ctx.save();
+      ctx.strokeStyle = '#9a9a9a';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(x0, y0);
+      ctx.lineTo(x1, y1);
+      ctx.stroke();
+      // Label at the upper end of the diagonal
+      ctx.setLineDash([]);
+      ctx.fillStyle = '#6b6b6b';
+      ctx.font = '11px "Source Sans 3", sans-serif';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText('substitute = supplement', x1 - 6, y1 - 4);
+      if ((chart.chartArea.right - chart.chartArea.left) > 520) {
+        ctx.font = '600 12px "Source Sans 3", sans-serif';
+        ctx.fillStyle = '#6b6b6b';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('Mostly supplementing', xScale.getPixelForValue(3), yScale.getPixelForValue(62));
+        ctx.fillText('Lower AI task impact', xScale.getPixelForValue(3), yScale.getPixelForValue(12));
+        ctx.textAlign = 'right';
+        ctx.fillText('AI-deep sectors: doing both', xScale.getPixelForValue(maxVal - 2), yScale.getPixelForValue(58));
+      }
+      ctx.restore();
+    }
+  };
+  Chart.register(diagonalLine);
+
+  Chart.register(refLineAndLabels);
+
+  // Plugin: draw a small "benchmark tick" on each bar at the National value.
+  // Bullet-chart style — lets readers see the U.S. average without leaving the chart.
+  const benchmarkTick = {
+    id: 'benchmarkTick',
+    afterDatasetsDraw(chart, args, options) {
+      if (!options || !options.enabled) return;
+      const values = options.values;
+      if (!values || !values.length) return;
+      const xScale = chart.scales.x;
+      const ctx = chart.ctx;
+      chart.data.datasets.forEach((ds, dsIdx) => {
+        const benchData = values[dsIdx];
+        if (!benchData) return;
+        const meta = chart.getDatasetMeta(dsIdx);
+        meta.data.forEach((bar, i) => {
+          const v = benchData[i];
+          if (v == null) return;
+          const xPos = xScale.getPixelForValue(v);
+          const yCenter = bar.y;
+          const halfH = (bar.height || 14) / 2;
+          const tickH = Math.max(6, halfH - 1);
+          ctx.save();
+          // Dark outline for readability over coloured bars
+          ctx.strokeStyle = '#1a1a1a';
+          ctx.lineWidth = 4;
+          ctx.lineCap = 'butt';
+          ctx.beginPath();
+          ctx.moveTo(xPos, yCenter - tickH);
+          ctx.lineTo(xPos, yCenter + tickH);
+          ctx.stroke();
+          // Gold core
+          ctx.strokeStyle = '#c8a02a';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(xPos, yCenter - tickH);
+          ctx.lineTo(xPos, yCenter + tickH);
+          ctx.stroke();
+          ctx.restore();
+        });
+      });
+    }
+  };
+  Chart.register(benchmarkTick);
+
+  // Build the dynamic chart-sub HTML with the benchmark legend when needed
+  function chartSubHtml(baseText, isNational) {
+    if (isNational) return baseText;
+    return baseText + ' &nbsp;·&nbsp; <span style="display:inline-block;width:3px;height:11px;background:#c8a02a;border:1px solid #1a1a1a;vertical-align:-1px;margin:0 4px 0 2px"></span>National benchmark on each bar';
+  }
+
+  function buildBData() {
+    const points = [];
+    const labels = [];
+    const fullNames = [];
+    Object.entries(L.sectors).forEach(([code, name]) => {
+      const s = DATA.slices['sector:'+code];
+      if (!s) return;
+      const sub = s.Q3['1'], sup = s.Q3['2'];
+      if (sub == null || sup == null) return;
+      points.push({ x: sub, y: sup });
+      labels.push(code);
+      fullNames.push(name);
+    });
+    // National benchmark point (drawn as a separate dataset for distinct styling)
+    const nat = DATA.slices['National'];
+    const natPoint = (nat.Q3['1'] != null && nat.Q3['2'] != null)
+      ? [{ x: nat.Q3['1'], y: nat.Q3['2'] }] : [];
+    return { points, labels, fullNames, natPoint };
+  }
+
+  function renderB() {
+    const { points, labels, fullNames, natPoint } = buildBData();
+
+    // Compute reasonable axis bounds (round up to nearest 10, with a small pad)
+    const allX = [...points.map(p => p.x), ...natPoint.map(p => p.x)];
+    const allY = [...points.map(p => p.y), ...natPoint.map(p => p.y)];
+    const maxX = Math.ceil((Math.max(...allX, 5) + 3) / 5) * 5;
+    const maxY = Math.ceil((Math.max(...allY, 5) + 3) / 5) * 5;
+    const maxAxis = Math.max(maxX, maxY);
+
+    if (chartB) chartB.destroy();
+    chartB = new Chart(document.getElementById('chartB'), {
+      type: 'scatter',
+      data: {
+        datasets: [
+          {
+            label: 'Industry sector',
+            data: points,
+            pointLabels: labels,
+            pointFullNames: fullNames,
+            backgroundColor: COLORS.subst,
+            borderColor: COLORS.subst,
+            pointRadius: 7,
+            pointHoverRadius: 10,
+            labelColor: '#3a3a3a',
+          },
+          {
+            label: 'National benchmark',
+            data: natPoint,
+            pointLabels: ['US'],
+            pointFullNames: ['National (all U.S. firms)'],
+            backgroundColor: '#c8a02a',
+            borderColor: '#8a6f1c',
+            borderWidth: 2,
+            pointStyle: 'rectRot',
+            pointRadius: 10,
+            pointHoverRadius: 13,
+            labelColor: '#8a6f1c',
+          }
+        ]
+      },
+      options: {
+        maintainAspectRatio: false,
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          diagonalLine: { enabled: true },
+          tooltip: {
+            callbacks: {
+              title: (items) => {
+                const it = items[0];
+                const ds = it.dataset;
+                return ds.pointFullNames[it.dataIndex];
+              },
+              label: (ctx) => [
+                `Substitute employee tasks: ${pct(ctx.raw.x)} of AI-using firms`,
+                `Supplement employee work: ${pct(ctx.raw.y)} of AI-using firms`,
+              ]
+            }
+          }
+        },
+        scales: {
+          x: {
+            min: 0, max: maxAxis,
+            title: { display: !isNarrow(), text: 'Share of AI-using firms using AI to SUBSTITUTE for employee tasks (%)', font: { size: 13, weight: '600' }, color: '#3a3a3a' },
+            ticks: { callback: v => v+'%' },
+            grid: { color: '#eee' }
+          },
+          y: {
+            min: 0, max: maxAxis,
+            title: { display: !isNarrow(), text: 'Share of AI-using firms using AI to SUPPLEMENT employee work (%)', font: { size: 13, weight: '600' }, color: '#3a3a3a' },
+            ticks: { callback: v => v+'%' },
+            grid: { color: '#eee' }
+          }
+        }
+      }
+    });
+
+    const rows = points.map((p, i) => [
+      labels[i],
+      fullNames[i],
+      pct(p.x),
+      pct(p.y),
+      pp(p.y - p.x)
+    ]);
+    if (natPoint.length) {
+      rows.push(['US', 'National benchmark', pct(natPoint[0].x), pct(natPoint[0].y), pp(natPoint[0].y - natPoint[0].x)]);
+    }
+    renderTable('tableB', ['Code', 'Slice', 'Substitution', 'Supplementation', 'Supplement minus substitute'], rows, [2, 3, 4]);
+  }
+
+  function renderC(key = 'National') {
+    const slice = getSlice(key);
+    // Sort tasks by value descending so the leading tasks appear at top
+    const entries = Object.entries(L.tasks).map(([id, name]) => ({
+      id, name, val: slice.Q10[id] ?? null
+    }));
+    entries.sort((a, b) => (b.val ?? -1) - (a.val ?? -1));
+
+    // National benchmark values aligned to the sorted entry order
+    const isNational = key === 'National';
+    const natSlice = DATA.slices['National'];
+    const natTaskVals = entries.map(e => natSlice.Q10[e.id] ?? null);
+
+    if (chartC) chartC.destroy();
+    chartC = new Chart(document.getElementById('chartC'), {
+      type: 'bar',
+      data: {
+        labels: entries.map(e => chartLabel('task', e.id, e.name)),
+        datasets: [{ data: entries.map(e => e.val), backgroundColor: COLORS.primary, borderWidth: 0 }]
+      },
+      options: {
+        indexAxis: 'y', maintainAspectRatio: false, responsive: true,
+        plugins: {
+          legend: { display: false },
+          benchmarkTick: {
+            enabled: !isNational,
+            values: [natTaskVals]
+          },
+          tooltip: {
+            callbacks: {
+              title: (items) => entries[items[0].dataIndex].name,
+              label: ctx => {
+                const lines = [pct(ctx.parsed.x)];
+                if (!isNational) {
+                  const natVal = natTaskVals[ctx.dataIndex];
+                  if (natVal != null && ctx.parsed.x != null) {
+                    lines.push(`National benchmark: ${pct(natVal)} (${pp(ctx.parsed.x - natVal)} vs. national)`);
+                  }
+                }
+                return lines;
+              }
+            }
+          }
+        },
+        scales: { x: { ticks: { callback: v => v+'%' }, grid: { color: '#eee' }, beginAtZero: true, max: 100 }, y: { grid: { display: false }, ticks: { font: { size: 13 } } } }
+      }
+    });
+
+    const subC = document.getElementById('c-chart-sub');
+    if (subC) subC.innerHTML = chartSubHtml('Share of GenAI-using firms reporting use for each task', isNational);
+
+    renderTable('tableC', ['Work-related task', 'Share of GenAI-using firms'], entries.map(e => [e.name, pct(e.val)]), [1]);
+  }
+
+  // ============ URL state — share specific views ============
+  // The URL hash captures the active view and the selected slice.
+  // Example: #view-a?slice=sector:51   or   #view-c?slice=size:G
+  function parseHash() {
+    const h = window.location.hash || '';
+    const m = h.match(/^#(view-[abc])(?:\?(.*))?$/);
+    if (!m) return null;
+    const params = {};
+    if (m[2]) {
+      m[2].split('&').forEach(pair => {
+        const [k, v] = pair.split('=');
+        if (k) params[k] = decodeURIComponent(v || '');
+      });
+    }
+    return { view: m[1], params };
+  }
+  function writeHash(view, params) {
+    let h = '#' + view;
+    const qs = Object.entries(params || {})
+      .filter(([, v]) => v && v !== 'National')
+      .map(([k, v]) => `${k}=${encodeURIComponent(v)}`)
+      .join('&');
+    if (qs) h += '?' + qs;
+    // replaceState avoids polluting browser history on every filter change
+    history.replaceState(null, '', h);
+  }
+
+  // Track current state for each view so we can sync URL on filter change.
+  const STATE = { a: 'National', c: 'National' };
+
+  function bind(viewId, render, onChange) {
+    const sel = document.getElementById(viewId + '-slice');
+    if (!sel) return;
+    const pill = document.getElementById(viewId + '-pill');
+    sel.addEventListener('change', () => {
+      const key = sel.value;
+      pill.textContent = sliceLabel(key);
+      STATE[viewId] = key;
+      render(key);
+      writeHash('view-' + viewId, { slice: key });
+    });
+  }
+
+  // initial render
+  renderA('National');
+  renderB();
+  renderC('National');
+
+  bind('a', renderA);
+  bind('c', renderC);
+
+  // Apply hash state if present on page load (e.g. someone arrived via a shared link)
+  function applyHashState() {
+    const parsed = parseHash();
+    if (!parsed) return;
+    const { view, params } = parsed;
+    if (view === 'view-a' && params.slice) {
+      const sel = document.getElementById('a-slice');
+      const pill = document.getElementById('a-pill');
+      if (sel) {
+        sel.value = params.slice;
+        if (pill) pill.textContent = sliceLabel(params.slice);
+        STATE.a = params.slice;
+        renderA(params.slice);
+      }
+    }
+    if (view === 'view-c' && params.slice) {
+      const sel = document.getElementById('c-slice');
+      const pill = document.getElementById('c-pill');
+      if (sel) {
+        sel.value = params.slice;
+        if (pill) pill.textContent = sliceLabel(params.slice);
+        STATE.c = params.slice;
+        renderC(params.slice);
+      }
+    }
+  }
+  applyHashState();
+})();
+</script>
+
+</body>
+</html>
